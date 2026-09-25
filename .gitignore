@@ -1,0 +1,61 @@
+# ============================================================
+#  上传仓库的排除规则
+#  目标: 仓库只留**源码 + 成品图 + 文档** —— 生成物一律不入库。
+# ============================================================
+
+# ---------- CubeMX 生成的 HAL 库（每个工程 60~70MB，可由 .ioc 重新生成）----------
+# 每个 STM32 工程目录下都有一份 Drivers/，加起来几百 MB。
+# 需要编译时用 STM32CubeMX 打开 .ioc 重新生成即可。
+# 注意: **不要排除 Core/** —— 它很小（几十 KB），而且含 main.h，
+#      read_config() 要从那里读引脚。排掉了脚本就跑不起来。
+Drivers/
+
+# ---------- Keil MDK 编译产物（保留 .uvprojx / .uvoptx 工程文件）----------
+# 注意: 不能整目录排除 MDK-ARM/, 因为 .uvprojx 是要入库的工程定义。
+MDK-ARM/*
+!MDK-ARM/*.uvprojx
+!MDK-ARM/*.uvoptx
+*.o
+*.d
+*.crf
+*.axf
+*.hex
+*.bin
+*.elf
+*.htm
+*.lnp
+*.plg
+*.dep
+*.iex
+*.sct
+*.i
+*.lst
+*.map
+*.build_log.htm
+*.uvguix.*
+startup_*.s
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---------- 渲染自检产物（技能约定：下划线开头 = 临时）----------
+*_check.png
+_*.png
+*.bmp
+*.pdf.tmp
+
+# ---------- 编辑器 / 系统 ----------
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# ---------- 备份 ----------
+*.bak
+*.orig
